@@ -63,6 +63,7 @@ public class Program
 
         // Swagger/OpenAPI
         builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
 
 
         builder.Services.AddApiVersioning(options =>

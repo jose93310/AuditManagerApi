@@ -83,7 +83,7 @@ namespace JS.AuditManager.RestApi.Controllers
         /// Actualiza la contraseña de un usuario.
         /// </summary>
         [HttpPut("{userId}/password")]
-        public async Task<IActionResult> UpdateUserPassword(Guid userId, [FromBody] string newPassword)
+        public async Task<IActionResult> UpdateUserPassword(Guid userId, [FromBody] UpdatePasswordDTO newPassword)
         {
             var updatedBy = TokenHelper.GetUserId(User);
             if (updatedBy == null)
@@ -96,7 +96,7 @@ namespace JS.AuditManager.RestApi.Controllers
                 return StatusCode(StatusCodes.Status401Unauthorized, response);
             }
 
-            var newHash = PasswordHelper.Hash(newPassword);
+            var newHash = PasswordHelper.Hash(newPassword.NewPassword);
 
             var result = await _userService.UpdateUserPasswordAsync(userId, newHash, updatedBy.Value);
             return StatusCode(StatusCodes.Status200OK, result);
