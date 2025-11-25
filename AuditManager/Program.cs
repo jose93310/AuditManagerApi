@@ -72,50 +72,33 @@ public class Program
             options.ReportApiVersions = true;
         });
 
-        builder.Services.AddSwaggerGen(c =>
-        {
-            c.SwaggerDoc("v1", new OpenApiInfo
-            {
-                Title = "Audit API - Jose Sanabria",
-                Version = "v1",
-                Description = "API auditoría - By Jose Sanabria"
-            });
-        });
-
-        // Global CORS
-        builder.Services.AddCors(options =>
-        {
-            options.AddPolicy("AllowAll", policy =>
-            {
-                policy.AllowAnyOrigin()
-                      .AllowAnyMethod()
-                      .AllowAnyHeader();
-            });
-        });
-
         var app = builder.Build();
 
+        // CORS
         app.UseCors("AllowAll");
 
-        // Middleware pipeline
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Audit API v1");
-            });
-        }
-
+        // HTTPS
         app.UseHttpsRedirection();
 
-        app.UseCors("GlobalCorsPolicy");
+        // Routing
+        app.UseRouting();
 
+        // Swagger (activado en todos los entornos)
+        app.UseSwagger();
+        app.UseSwaggerUI(c =>
+        {
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "Audit Manager API v1 - By Jose Sanabria");
+            c.RoutePrefix = "swagger";
+        });
+
+        // Auth
         app.UseAuthentication();
         app.UseAuthorization();
 
+        // Map Controllers
         app.MapControllers();
 
         app.Run();
+
     }
 }
