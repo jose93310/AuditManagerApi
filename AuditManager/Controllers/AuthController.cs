@@ -10,8 +10,6 @@ namespace JS.AuditManager.RestApi.Controllers
     /// Gestiona el acceso, renovación y revocación de tokens para usuarios.
     /// </summary>
     [ApiController]
-    //[ApiVersion("1.0")]
-    //[Route("api/v{version:apiVersion}/auth")]
     [Route("api/auth")]
     public class AuthController : ControllerBase
     {
