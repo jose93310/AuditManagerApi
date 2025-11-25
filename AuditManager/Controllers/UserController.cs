@@ -4,6 +4,7 @@ using JS.AuditManager.Application.Helper.Security;
 using JS.AuditManager.Application.IService;
 using JS.AuditManager.Domain.Enum;
 using JS.AuditManager.Domain.ModelEntity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JS.AuditManager.RestApi.Controllers
@@ -15,6 +16,7 @@ namespace JS.AuditManager.RestApi.Controllers
     [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/users")]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -31,8 +33,6 @@ namespace JS.AuditManager.RestApi.Controllers
         #region RegisterUser
         /// <summary>
         /// Registra un nuevo usuario en el sistema.
-        /// Este endpoint está público por fines de prueba
-        /// Se debe protegerlo con JWT y políticas personalizadas.
         /// </summary>
         /// <param name="request">Datos del nuevo usuario (nombre, correo, contraseña, etc.).</param>
         /// <returns>Respuesta con estado HTTP y resultado del registro.</returns>
@@ -45,7 +45,7 @@ namespace JS.AuditManager.RestApi.Controllers
                 var response = new SingleResponse<bool>();
 
                 response.DidError = true;
-                response.ErrorMessage = "Identificador del usuario no valido.";
+                response.ErrorMessage = "Usuario no autenticado.";
 
                 return StatusCode(StatusCodes.Status401Unauthorized, response);
             }
@@ -69,7 +69,7 @@ namespace JS.AuditManager.RestApi.Controllers
                 var response = new SingleResponse<bool>();
 
                 response.DidError = true;
-                response.ErrorMessage = "Identificador del usuario no valido.";
+                response.ErrorMessage = "Usuario no autenticado.";
                 return StatusCode(StatusCodes.Status401Unauthorized, response);
             }
 
@@ -91,7 +91,7 @@ namespace JS.AuditManager.RestApi.Controllers
                 var response = new SingleResponse<bool>();
 
                 response.DidError = true;
-                response.ErrorMessage = "Identificador del usuario no valido.";
+                response.ErrorMessage = "Usuario no autenticado.";
 
                 return StatusCode(StatusCodes.Status401Unauthorized, response);
             }

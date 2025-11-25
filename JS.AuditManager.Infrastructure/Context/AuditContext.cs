@@ -18,6 +18,7 @@ namespace JS.AuditManager.Infrastructure.Context
 
         public DbSet<User> Users { get; set; }
         public DbSet<Token> Tokens { get; set; }
+        public DbSet<AuditEntity> Audits { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -115,6 +116,12 @@ namespace JS.AuditManager.Infrastructure.Context
                 entity.Property(e => e.RefreshExpiresAt)
                     .HasColumnType("datetime2")
                     .IsRequired();
+
+                modelBuilder.Entity<AuditEntity>(entity =>
+                {
+                    entity.ToTable("Audit", "dbo");
+                    entity.HasKey(e => e.AuditId); 
+                });
 
             });
         }

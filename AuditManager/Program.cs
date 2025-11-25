@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using Asp.Versioning;
+using JS.AuditManager.Infrastructure.Audit;
 
 public class Program
 {
@@ -55,10 +56,12 @@ public class Program
         builder.Services.AddScoped<IAuthService, AuthService>();
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
+        builder.Services.AddScoped<IAuditService, AuditService>();
 
         // Repositorios de dominio
         builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddScoped<ITokenRepository, TokenRepository>();
+        builder.Services.AddScoped<IAuditRepository, AuditRepository>();
         #endregion
 
         // Swagger/OpenAPI
