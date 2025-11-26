@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\JS.AuditManager.Application\JS.AuditManager.Application.csproj" />
     <ProjectReference Include="..\JS.AuditManager.Infrastructure\JS.AuditManager.Infrastructure.csproj" />
+    <ProjectReference Include="..\JS.AuditManager.Tests\JS.AuditManager.Tests.csproj" />
   </ItemGroup>
 
 </Project>

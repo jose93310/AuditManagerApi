@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35931.197 d17.13
+VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JS.AuditManager.RestApi", "AuditManager\JS.AuditManager.RestApi.csproj", "{0A6EF04A-95AA-4C6E-B57E-DF9D25C63E13}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JS.AuditManager.Infrastructure", "JS.AuditManager.Infrastructure\JS.AuditManager.Infrastructure.csproj", "{74D9BF21-753D-4A1B-B170-2D24F7675568}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JS.AuditManager.Domain", "JS.AuditManager.Domain\JS.AuditManager.Domain.csproj", "{AC8DF5A2-4F55-46AD-9ADE-E33ABB1EFF61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JS.AuditManager.Tests", "JS.AuditManager.Tests\JS.AuditManager.Tests.csproj", "{B4A5052D-FD27-4DF4-9142-E02ED139E05B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{AC8DF5A2-4F55-46AD-9ADE-E33ABB1EFF61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC8DF5A2-4F55-46AD-9ADE-E33ABB1EFF61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC8DF5A2-4F55-46AD-9ADE-E33ABB1EFF61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4A5052D-FD27-4DF4-9142-E02ED139E05B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4A5052D-FD27-4DF4-9142-E02ED139E05B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4A5052D-FD27-4DF4-9142-E02ED139E05B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4A5052D-FD27-4DF4-9142-E02ED139E05B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
