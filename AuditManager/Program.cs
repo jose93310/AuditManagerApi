@@ -11,6 +11,7 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using Asp.Versioning;
 using JS.AuditManager.Infrastructure.Audit;
+using JS.AuditManager.Infrastructure.Finding;
 
 public class Program
 {
@@ -57,11 +58,13 @@ public class Program
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
         builder.Services.AddScoped<IAuditService, AuditService>();
+        builder.Services.AddScoped<IFindingService, FindingService>();
 
         // Repositorios de dominio
         builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddScoped<ITokenRepository, TokenRepository>();
         builder.Services.AddScoped<IAuditRepository, AuditRepository>();
+        builder.Services.AddScoped<IFindingRepository, FindingRepository>();
         #endregion
 
         // Swagger/OpenAPI

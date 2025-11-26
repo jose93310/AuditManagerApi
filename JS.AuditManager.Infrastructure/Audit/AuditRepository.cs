@@ -20,18 +20,18 @@ namespace JS.AuditManager.Infrastructure.Audit
             _context = context;
         }
 
-        public async Task AddAsync(AuditEntity audit)
+        public async Task AddAsync(Domain.ModelEntity.Audit audit)
         {
             _context.Audits.Add(audit);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<AuditEntity?> GetByIdAsync(int auditId)
+        public async Task<Domain.ModelEntity.Audit?> GetByIdAsync(int auditId)
         {
             return await _context.Audits.FindAsync(auditId);
         }
 
-        public async Task<List<AuditEntity>> GetByFilterAsync(AuditFilter filter)
+        public async Task<List<Domain.ModelEntity.Audit>> GetByFilterAsync(AuditFilter filter)
         {
             var query = _context.Audits.AsQueryable();
 
@@ -47,11 +47,17 @@ namespace JS.AuditManager.Infrastructure.Audit
             return await query.ToListAsync();
         }
 
-        public async Task UpdateAsync(AuditEntity audit)
+        public async Task UpdateAsync(Domain.ModelEntity.Audit audit)
         {
             _context.Audits.Update(audit);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<bool> ExistsAsync(int auditId)
+        {
+            return await _context.Audits.AnyAsync(a => a.AuditId == auditId);
+        }
+
     }
 
 }
