@@ -83,6 +83,43 @@ namespace JS.AuditManager.RestApi.Controllers
             return Ok(result);
         }
         #endregion
+
+        #region AssignResponsible
+        /// <summary>
+        /// Asigna un responsable a una auditoría.
+        /// </summary>
+        [HttpPut("assign")]
+        public async Task<IActionResult> AssignResponsible([FromQuery] int auditId, [FromQuery] int responsibleId)
+        {
+            var modifiedBy = TokenHelper.GetUserId(User);
+            if (modifiedBy == null)
+                return Unauthorized(new SingleResponse<bool>
+                {
+                    DidError = true,
+                    ErrorMessage = "Usuario no autenticado.",
+                    Message = "Token inválido o ausente.",
+                    Model = false
+                });
+
+            var result = await _auditService.AssignResponsibleAsync(auditId, responsibleId, modifiedBy.Value);
+            return result.DidError ? BadRequest(result) : Ok(result);
+        }
+        #endregion
+
+        #region GetAuditsByResponsible
+        /// <summary>
+        /// Consulta auditorías filtradas por responsable.
+        /// </summary>
+        [HttpGet]
+        public async Task<IActionResult> GetAuditsByResponsible([FromQuery] int responsibleId)
+        {
+            var result = await _auditService.GetAuditsByResponsibleAsync(responsibleId);
+            return Ok(result);
+        }
+        #endregion
+
+
+
     }
 }
 

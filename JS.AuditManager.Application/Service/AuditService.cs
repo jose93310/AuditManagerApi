@@ -4,21 +4,18 @@ using JS.AuditManager.Domain.Enum;
 using JS.AuditManager.Domain.Filters;
 using JS.AuditManager.Domain.IRepository;
 using JS.AuditManager.Domain.ModelEntity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JS.AuditManager.Application.Service
 {
     public class AuditService : IAuditService
     {
         private readonly IAuditRepository _auditRepo;
+        private readonly IResponsibleRepository _responRepo;
 
-        public AuditService(IAuditRepository auditRepo)
+        public AuditService(IAuditRepository auditRepo, IResponsibleRepository responRepo)
         {
             _auditRepo = auditRepo;
+            _responRepo = responRepo;
         }
 
         public async Task<SingleResponse<int>> CreateAuditAsync(AuditCreateDTO dto, Guid createdBy)
@@ -57,6 +54,18 @@ namespace JS.AuditManager.Application.Service
             if (audit == null || audit.StatusId != 1)
                 return new SingleResponse<bool> { DidError = true, ErrorMessage = "Solo se puede actualizar auditorías en estado Pendiente." };
 
+            var responsibleExists = await _responRepo.ExistsAsync(dto.ResponsibleId);
+            if (!responsibleExists)
+            {
+                return new SingleResponse<bool>
+                {
+                    DidError = true,
+                    ErrorMessage = "El ID de responsable no existe.",
+                    Message = "Validación fallida: ResponsibleId inválido.",
+                    Model = false
+                };
+            }
+
             audit.Title = dto.Title;
             audit.StartDate = dto.StartDate;
             audit.EndDate = dto.EndDate;
@@ -82,6 +91,61 @@ namespace JS.AuditManager.Application.Service
             await _auditRepo.UpdateAsync(audit);
             return new SingleResponse<bool> { Model = true, Message = "Estatus de Auditoría actualizado correctamente" };
         }
+
+        public async Task<SingleResponse<bool>> AssignResponsibleAsync(int auditId, int responsibleId, Guid modifiedBy)
+        {
+            var audit = await _auditRepo.GetByIdAsync(auditId);
+            if (audit == null)
+            {
+                return new SingleResponse<bool>
+                {
+                    DidError = true,
+                    ErrorMessage = "Auditoría no encontrada.",
+                    Message = "No se pudo asignar el responsable.",
+                    Model = false
+                };
+            }
+
+            // Validar que el responsable exista antes de asignar
+            var responsibleExists = await _responRepo.ExistsAsync(responsibleId);
+            if (!responsibleExists)
+            {
+                return new SingleResponse<bool>
+                {
+                    DidError = true,
+                    ErrorMessage = "El ID de responsable no existe.",
+                    Message = "Validación fallida: Identificador del Responsible inválido.",
+                    Model = false
+                };
+            }
+
+            audit.ResponsibleId = responsibleId;
+            audit.ModifiedAt = DateTime.UtcNow;
+            audit.ModifiedBy = modifiedBy;
+
+            await _auditRepo.UpdateAsync(audit);
+
+            return new SingleResponse<bool>
+            {
+                Model = true,
+                Message = "Responsable asignado correctamente a la auditoría."
+            };
+        }
+
+        public async Task<ListResponse<Audit>> GetAuditsByResponsibleAsync(int responsibleId)
+        {
+            var audits = await _auditRepo.GetByResponsibleAsync(responsibleId);
+
+            return new ListResponse<Audit>
+            {
+                Model = audits,
+                Message = audits.Any()
+                    ? "Auditorías consultadas correctamente."
+                    : "No se encontraron auditorías para el responsable."
+            };
+        }
+
+
     }
 
 }

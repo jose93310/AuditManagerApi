@@ -14,6 +14,9 @@ namespace JS.AuditManager.Application.IService
         Task<List<Audit>> GetAuditsByFilterAsync(AuditFilterDTO filter);
         Task<SingleResponse<bool>> UpdateAuditAsync(AuditUpdateDTO dto, Guid modifiedBy);
         Task<SingleResponse<bool>> ChangeAuditStatusAsync(AuditStatusChangeDTO dto, Guid modifiedBy);
+        Task<SingleResponse<bool>> AssignResponsibleAsync(int auditId, int responsibleId, Guid modifiedBy);
+        Task<ListResponse<Audit>> GetAuditsByResponsibleAsync(int responsibleId);
+
     }
 
 }

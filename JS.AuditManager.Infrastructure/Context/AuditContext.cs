@@ -20,6 +20,7 @@ namespace JS.AuditManager.Infrastructure.Context
         public DbSet<Token> Tokens { get; set; }
         public DbSet<Domain.ModelEntity.Audit> Audits { get; set; }
         public DbSet<Domain.ModelEntity.Finding> Findings { get; set; }
+        public DbSet<Domain.ModelEntity.Responsible> Responsibles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -130,6 +131,13 @@ namespace JS.AuditManager.Infrastructure.Context
                 {
                     entity.ToTable("Finding", "dbo");
                     entity.HasKey(e => e.FindingId);
+                });
+
+                // Configuracion Responsible
+                modelBuilder.Entity<Domain.ModelEntity.Responsible>(entity =>
+                {
+                    entity.ToTable("Responsible", "dbo");
+                    entity.HasKey(e => e.ResponsibleId);
                 });
 
             });
