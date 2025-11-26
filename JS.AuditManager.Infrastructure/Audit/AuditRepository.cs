@@ -58,6 +58,13 @@ namespace JS.AuditManager.Infrastructure.Audit
             return await _context.Audits.AnyAsync(a => a.AuditId == auditId);
         }
 
+        public async Task<List<Domain.ModelEntity.Audit>> GetByResponsibleAsync(int responsibleId)
+        {
+            return await _context.Audits
+                .Where(a => a.ResponsibleId == responsibleId)
+                .ToListAsync();
+        }
+
     }
 
 }

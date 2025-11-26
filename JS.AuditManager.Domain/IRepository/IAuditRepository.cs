@@ -14,6 +14,8 @@ namespace JS.AuditManager.Domain.IRepository
         Task<Audit?> GetByIdAsync(int auditId);
         Task<List<Audit>> GetByFilterAsync(AuditFilter filter);
         Task UpdateAsync(Audit audit);
-        Task<bool> ExistsAsync(int auditId); 
+        Task<bool> ExistsAsync(int auditId);
+        Task<List<Audit>> GetByResponsibleAsync(int responsibleId);
+
     }
 }
