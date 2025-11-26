@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JS.AuditManager.Domain.ModelEntity
 {
-    public class AuditEntity
+    public class Audit
     {
         public int AuditId { get; set; }
         public string Title { get; set; } = string.Empty;

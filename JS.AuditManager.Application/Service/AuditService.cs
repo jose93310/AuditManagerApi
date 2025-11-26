@@ -23,7 +23,7 @@ namespace JS.AuditManager.Application.Service
 
         public async Task<SingleResponse<int>> CreateAuditAsync(AuditCreateDTO dto, Guid createdBy)
         {
-            var audit = new AuditEntity
+            var audit = new Audit
             {
                 Title = dto.Title,
                 StartDate = dto.StartDate,
@@ -39,7 +39,7 @@ namespace JS.AuditManager.Application.Service
             return new SingleResponse<int> { Model = audit.AuditId, Message="Auditoría creada satisfactoriamente" };
         }
 
-        public async Task<List<AuditEntity>> GetAuditsByFilterAsync(AuditFilterDTO dto)
+        public async Task<List<Audit>> GetAuditsByFilterAsync(AuditFilterDTO dto)
         {
             var filter = new AuditFilter
             {

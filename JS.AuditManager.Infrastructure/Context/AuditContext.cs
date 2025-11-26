@@ -18,7 +18,8 @@ namespace JS.AuditManager.Infrastructure.Context
 
         public DbSet<User> Users { get; set; }
         public DbSet<Token> Tokens { get; set; }
-        public DbSet<AuditEntity> Audits { get; set; }
+        public DbSet<Domain.ModelEntity.Audit> Audits { get; set; }
+        public DbSet<Domain.ModelEntity.Finding> Findings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -117,10 +118,18 @@ namespace JS.AuditManager.Infrastructure.Context
                     .HasColumnType("datetime2")
                     .IsRequired();
 
-                modelBuilder.Entity<AuditEntity>(entity =>
+                // Configuracion Audit
+                modelBuilder.Entity<Domain.ModelEntity.Audit>(entity =>
                 {
                     entity.ToTable("Audit", "dbo");
                     entity.HasKey(e => e.AuditId); 
+                });
+
+                // Configuracion Finding
+                modelBuilder.Entity<Domain.ModelEntity.Finding>(entity =>
+                {
+                    entity.ToTable("Finding", "dbo");
+                    entity.HasKey(e => e.FindingId);
                 });
 
             });

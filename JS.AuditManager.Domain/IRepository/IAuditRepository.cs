@@ -10,9 +10,10 @@ namespace JS.AuditManager.Domain.IRepository
 {
     public interface IAuditRepository
     {
-        Task AddAsync(AuditEntity audit);
-        Task<AuditEntity?> GetByIdAsync(int auditId);
-        Task<List<AuditEntity>> GetByFilterAsync(AuditFilter filter);
-        Task UpdateAsync(AuditEntity audit);
+        Task AddAsync(Audit audit);
+        Task<Audit?> GetByIdAsync(int auditId);
+        Task<List<Audit>> GetByFilterAsync(AuditFilter filter);
+        Task UpdateAsync(Audit audit);
+        Task<bool> ExistsAsync(int auditId); 
     }
 }
